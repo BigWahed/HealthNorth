@@ -1,0 +1,51 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Mes prescriptions - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-2">Mes prescriptions</h1>
+            <p class="text-secondary mb-0">Liste des prescriptions associées à ton compte patient.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('patient_dossier') }}" class="btn btn-outline-primary">Mon dossier patient</a>
+            <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+        </div>
+    </div>
+
+    <div class="hn-card p-4">
+        {% if prescriptions is empty %}
+            <p class="text-secondary mb-0">Aucune prescription pour le moment.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Date de prescription</th>
+                        <th>Professionnel</th>
+                        <th>Contenu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for prescription in prescriptions %}
+                        <tr>
+                            <td>{{ prescription.datePrescription ? prescription.datePrescription|date('d/m/Y') : '-' }}</td>
+                            <td>
+                                {% if prescription.professionnel %}
+                                    {{ prescription.professionnel.prenom }} {{ prescription.professionnel.nom }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ prescription.contenu }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

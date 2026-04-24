@@ -118,4 +118,64 @@ class PatientController extends AbstractController
             'rendezVousList' => $rendezVousList,
         ]);
     }
+
+    #[Route('/patient/prescriptions', name: 'patient_prescriptions')]
+    public function mesPrescriptions(EntityManagerInterface $entityManager): Response
+    {
+        $patient = $this->getUser();
+
+        if (!$patient instanceof User) {
+            throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
+        }
+
+        // Filtrage par patient connecte: on n'affiche que SES prescriptions.
+        $prescriptions = $entityManager->getRepository(Prescription::class)->findBy(
+            ['patient' => $patient],
+            ['datePrescription' => 'DESC']
+        );
+
+        return $this->render('patient/prescriptions/index.html.twig', [
+            'prescriptions' => $prescriptions,
+        ]);
+    }
+
+    #[Route('/patient/resultats', name: 'patient_resultats')]
+    public function mesResultats(EntityManagerInterface $entityManager): Response
+    {
+        $patient = $this->getUser();
+
+        if (!$patient instanceof User) {
+            throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
+        }
+
+        // Filtrage par patient connecte: on n'affiche que SES resultats d'analyse.
+        $resultatsAnalyse = $entityManager->getRepository(ResultatAnalyse::class)->findBy(
+            ['patient' => $patient],
+            ['dateAnalyse' => 'DESC']
+        );
+
+        return $this->render('patient/resultats/index.html.twig', [
+            'resultatsAnalyse' => $resultatsAnalyse,
+        ]);
+    }
+
+    #[Route('/patient/prises-medicaments', name: 'patient_prises_medicaments')]
+    public function mesPrisesMedicaments(EntityManagerInterface $entityManager): Response
+    {
+        $patient = $this->getUser();
+
+        if (!$patient instanceof User) {
+            throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
+        }
+
+        // Filtrage par patient connecte: on n'affiche que SES prises de medicaments.
+        $prisesMedicaments = $entityManager->getRepository(PriseMedicament::class)->findBy(
+            ['patient' => $patient],
+            ['id' => 'DESC']
+        );
+
+        return $this->render('patient/prises_medicaments/index.html.twig', [
+            'prisesMedicaments' => $prisesMedicaments,
+        ]);
+    }
 }

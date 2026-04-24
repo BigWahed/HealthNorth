@@ -1,0 +1,56 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Mes résultats d’analyse - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-2">Mes résultats d’analyse</h1>
+            <p class="text-secondary mb-0">Liste des résultats associés à ton compte patient.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('patient_dossier') }}" class="btn btn-outline-primary">Mon dossier patient</a>
+            <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+        </div>
+    </div>
+
+    <div class="hn-card p-4">
+        {% if resultatsAnalyse is empty %}
+            <p class="text-secondary mb-0">Aucun résultat d’analyse pour le moment.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Type d’analyse</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Commentaire</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for resultat in resultatsAnalyse %}
+                        {% set statutBrut = resultat.statut|default('')|lower|trim %}
+                        {% set statutAffiche = 'En attente' %}
+                        {% if statutBrut in ['planifie', 'planifié'] %}
+                            {% set statutAffiche = 'Planifié' %}
+                        {% elseif statutBrut in ['termine', 'terminé', 'valide', 'validé'] %}
+                            {% set statutAffiche = 'Terminé' %}
+                        {% endif %}
+                        <tr>
+                            <td>{{ resultat.titre }}</td>
+                            <td>{{ resultat.typeAnalyse }}</td>
+                            <td>{{ resultat.dateAnalyse ? resultat.dateAnalyse|date('d/m/Y') : '-' }}</td>
+                            <td><span class="badge text-bg-light border">{{ statutAffiche }}</span></td>
+                            <td>{{ resultat.commentaire ?: '-' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
