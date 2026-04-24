@@ -12,18 +12,6 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_dashboard');
-        }
-
-        if ($this->isGranted('ROLE_PRO')) {
-            return $this->redirectToRoute('pro_dashboard');
-        }
-
-        if ($this->isGranted('ROLE_PATIENT')) {
-            return $this->redirectToRoute('patient_dashboard');
-        }
-
         return $this->render('security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
@@ -36,4 +24,3 @@ class SecurityController extends AbstractController
         throw new \LogicException('Cette methode est interceptee par le firewall logout de Symfony.');
     }
 }
-

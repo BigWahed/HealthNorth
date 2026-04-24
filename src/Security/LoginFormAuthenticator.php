@@ -47,10 +47,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
-
         $user = $token->getUser();
 
         if ($user instanceof User) {
@@ -69,6 +65,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             }
         }
 
+        // Pour un projet pedagogique, on priorise la redirection par role.
+        // Si aucun role specifique, on reprend la cible demandee initialement.
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            return new RedirectResponse($targetPath);
+        }
+
         return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
     }
 
@@ -77,4 +79,3 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
-
