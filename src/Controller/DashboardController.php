@@ -68,42 +68,42 @@ class DashboardController extends AbstractController
         // Dashboard patient: cartes simples et pedagogiques pour les futures pages metier.
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Dashboard Patient',
-            'page_subtitle' => 'Espace personnel de suivi medical.',
+            'page_subtitle' => 'Espace personnel de suivi médical.',
             'role_label' => 'ROLE_PATIENT',
             'cards' => [
                 [
                     'title' => 'Prendre un rendez-vous',
-                    'text' => 'Reserver une consultation, une analyse ou une intervention.',
+                    'text' => 'Réserver une consultation, une analyse ou une intervention.',
                     'action' => 'Prendre rendez-vous',
                     'link' => '/patient/rendez-vous/nouveau',
                 ],
                 [
                     'title' => 'Mes rendez-vous',
-                    'text' => 'Consulter mes rendez-vous programmes.',
+                    'text' => 'Consulter mes rendez-vous programmés.',
                     'action' => 'Voir mes rendez-vous',
                     'link' => '/patient/rendez-vous',
                 ],
                 [
                     'title' => 'Mon dossier patient',
-                    'text' => 'Retrouver mes informations medicales principales.',
+                    'text' => 'Retrouver mes informations médicales principales.',
                     'action' => 'Voir mon dossier',
                     'link' => '/patient/dossier',
                 ],
                 [
                     'title' => 'Mes prescriptions',
-                    'text' => 'Consulter les prescriptions ajoutees par les professionnels de sante.',
+                    'text' => 'Consulter les prescriptions ajoutées par les professionnels de santé.',
                     'action' => 'Voir mes prescriptions',
                     'link' => '/patient/prescriptions',
                 ],
                 [
-                    'title' => 'Mes prises de medicaments',
-                    'text' => 'Suivre l ordonnancement de mes prises de medicaments.',
+                    'title' => 'Mes prises de médicaments',
+                    'text' => 'Suivre l’ordonnancement de mes prises de médicaments.',
                     'action' => 'Voir mes prises',
                     'link' => '/patient/prises-medicaments',
                 ],
                 [
-                    'title' => 'Mes resultats d analyse',
-                    'text' => 'Retrouver mes derniers resultats medicaux.',
+                    'title' => 'Mes résultats d’analyse',
+                    'text' => 'Retrouver mes derniers résultats médicaux.',
                     'action' => 'Voir mes resultats',
                     'link' => '/patient/resultats',
                 ],

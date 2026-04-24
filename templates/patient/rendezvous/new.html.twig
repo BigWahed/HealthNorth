@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prendre un rendez-vous - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-2">Prendre un rendez-vous</h1>
+            <p class="text-secondary mb-0">Remplis ce formulaire pour envoyer une demande.</p>
+        </div>
+        <a href="{{ path('patient_rendezvous_index') }}" class="btn btn-outline-primary">Mes rendez-vous</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="hn-card p-4 p-md-5">
+                {{ form_start(form) }}
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.etablissement) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.typeIntervention) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.professionnel) }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ form_row(form.dateHeure) }}
+                        </div>
+                    </div>
+
+                    <div class="mt-5 d-flex flex-wrap gap-3">
+                        <button type="submit" class="btn btn-primary px-4">Enregistrer le rendez-vous</button>
+                        <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary px-4">Retour dashboard</a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

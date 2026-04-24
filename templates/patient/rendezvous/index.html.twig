@@ -1,0 +1,66 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Mes rendez-vous - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-2">Mes rendez-vous</h1>
+            <p class="text-secondary mb-0">Liste des rendez-vous associés à ton compte patient.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+            <a href="{{ path('patient_rendezvous_new') }}" class="btn btn-primary">Prendre un rendez-vous</a>
+        </div>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="hn-card p-4">
+        {% if rendezVousList is empty %}
+            <p class="text-secondary mb-0">Aucun rendez-vous pour le moment.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Date et heure</th>
+                        <th>Établissement</th>
+                        <th>Type d’intervention</th>
+                        <th>Professionnel</th>
+                        <th>Statut</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rdv in rendezVousList %}
+                        {% set statutBrut = rdv.statut|default('')|lower|trim %}
+                        {% set statutAffiche = 'En attente' %}
+                        {% if statutBrut in ['planifie', 'planifié'] %}
+                            {% set statutAffiche = 'Planifié' %}
+                        {% elseif statutBrut in ['termine', 'terminé'] %}
+                            {% set statutAffiche = 'Terminé' %}
+                        {% endif %}
+                        <tr>
+                            <td>{{ rdv.dateHeure ? rdv.dateHeure|date('d/m/Y H:i') : '-' }}</td>
+                            <td>{{ rdv.etablissement ? rdv.etablissement.nom : '-' }}</td>
+                            <td>{{ rdv.typeIntervention ? rdv.typeIntervention.libelle : '-' }}</td>
+                            <td>
+                                {% if rdv.professionnel %}
+                                    {{ rdv.professionnel.prenom }} {{ rdv.professionnel.nom }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td><span class="badge text-bg-light border">{{ statutAffiche }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

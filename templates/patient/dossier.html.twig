@@ -1,0 +1,112 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Mon dossier patient - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-2">Mon dossier patient</h1>
+            <p class="text-secondary mb-0">Vue centralisée de vos informations et de votre suivi médical.</p>
+        </div>
+        <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+    </div>
+
+    <div class="hn-card p-4 mb-4">
+        <h2 class="h5 mb-3">Informations personnelles</h2>
+        <div class="row g-3">
+            <div class="col-12 col-md-6"><div><strong>Nom :</strong> {{ patient.nom }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Prénom :</strong> {{ patient.prenom }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Email :</strong> {{ patient.email }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Téléphone :</strong> {{ patient.telephone }}</div></div>
+            <div class="col-12 col-md-8"><div><strong>Adresse :</strong> {{ patient.adresse }}</div></div>
+            <div class="col-12 col-md-4"><div><strong>Date de naissance :</strong> {{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '-' }}</div></div>
+        </div>
+    </div>
+
+    <div class="hn-card p-4 mb-4">
+        <h2 class="h5 mb-3">Résumé de mes rendez-vous</h2>
+        {% if rendezVousList is empty %}
+            <p class="text-secondary mb-0">Aucun rendez-vous pour le moment.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Date et heure</th><th>Établissement</th><th>Type d'intervention</th><th>Professionnel</th><th>Statut</th></tr></thead>
+                    <tbody>
+                    {% for rdv in rendezVousList %}
+                        {% set statutBrut = rdv.statut|default('')|lower|trim %}
+                        {% set statutAffiche = 'En attente' %}
+                        {% if statutBrut in ['planifie', 'planifié'] %}{% set statutAffiche = 'Planifié' %}
+                        {% elseif statutBrut in ['termine', 'terminé'] %}{% set statutAffiche = 'Terminé' %}{% endif %}
+                        <tr>
+                            <td>{{ rdv.dateHeure ? rdv.dateHeure|date('d/m/Y H:i') : '-' }}</td>
+                            <td>{{ rdv.etablissement ? rdv.etablissement.nom : '-' }}</td>
+                            <td>{{ rdv.typeIntervention ? rdv.typeIntervention.libelle : '-' }}</td>
+                            <td>{% if rdv.professionnel %}{{ rdv.professionnel.prenom }} {{ rdv.professionnel.nom }}{% else %}-{% endif %}</td>
+                            <td><span class="badge text-bg-light border">{{ statutAffiche }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="hn-card p-4 mb-4">
+        <h2 class="h5 mb-3">Résumé de mes prescriptions</h2>
+        {% if prescriptions is empty %}
+            <p class="text-secondary mb-0">Aucune prescription pour le moment.</p>
+        {% else %}
+            <div class="table-responsive"><table class="table align-middle mb-0">
+                <thead><tr><th>Date de prescription</th><th>Professionnel</th><th>Contenu</th></tr></thead>
+                <tbody>{% for prescription in prescriptions %}<tr>
+                    <td>{{ prescription.datePrescription ? prescription.datePrescription|date('d/m/Y') : '-' }}</td>
+                    <td>{% if prescription.professionnel %}{{ prescription.professionnel.prenom }} {{ prescription.professionnel.nom }}{% else %}-{% endif %}</td>
+                    <td>{{ prescription.contenu }}</td>
+                </tr>{% endfor %}</tbody>
+            </table></div>
+        {% endif %}
+    </div>
+
+    <div class="hn-card p-4 mb-4">
+        <h2 class="h5 mb-3">Résumé de mes résultats d'analyse</h2>
+        {% if resultatsAnalyse is empty %}
+            <p class="text-secondary mb-0">Aucun résultat d'analyse pour le moment.</p>
+        {% else %}
+            <div class="table-responsive"><table class="table align-middle mb-0">
+                <thead><tr><th>Titre</th><th>Type d'analyse</th><th>Date</th><th>Statut</th><th>Commentaire</th></tr></thead>
+                <tbody>{% for resultat in resultatsAnalyse %}
+                    {% set statutBrut = resultat.statut|default('')|lower|trim %}
+                    {% set statutAffiche = 'En attente' %}
+                    {% if statutBrut in ['planifie', 'planifié'] %}{% set statutAffiche = 'Planifié' %}
+                    {% elseif statutBrut in ['termine', 'terminé', 'valide', 'validé'] %}{% set statutAffiche = 'Terminé' %}{% endif %}
+                    <tr>
+                        <td>{{ resultat.titre }}</td>
+                        <td>{{ resultat.typeAnalyse }}</td>
+                        <td>{{ resultat.dateAnalyse ? resultat.dateAnalyse|date('d/m/Y') : '-' }}</td>
+                        <td><span class="badge text-bg-light border">{{ statutAffiche }}</span></td>
+                        <td>{{ resultat.commentaire ?: '-' }}</td>
+                    </tr>
+                {% endfor %}</tbody>
+            </table></div>
+        {% endif %}
+    </div>
+
+    <div class="hn-card p-4">
+        <h2 class="h5 mb-3">Résumé de mes prises de médicaments</h2>
+        {% if prisesMedicaments is empty %}
+            <p class="text-secondary mb-0">Aucune prise de médicament pour le moment.</p>
+        {% else %}
+            <div class="table-responsive"><table class="table align-middle mb-0">
+                <thead><tr><th>Médicament</th><th>Posologie</th><th>Fréquence</th><th>Moment de prise</th></tr></thead>
+                <tbody>{% for prise in prisesMedicaments %}<tr>
+                    <td>{{ prise.medicament ? prise.medicament.nom : '-' }}</td>
+                    <td>{{ prise.posologie }}</td>
+                    <td>{{ prise.frequence }}</td>
+                    <td>{{ prise.momentPrise }}</td>
+                </tr>{% endfor %}</tbody>
+            </table></div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
