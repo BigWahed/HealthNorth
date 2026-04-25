@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-// Toutes les routes de ce controleur sont protegees pour ROLE_PRO.
+// Toutes les routes de ce contrôleur sont protégées pour ROLE_PRO.
 #[IsGranted('ROLE_PRO')]
 class ProController extends AbstractController
 {
@@ -65,7 +65,7 @@ class ProController extends AbstractController
         ]);
     }
 
-    #[Route('/pro/patient/{id}/prescription/nouvelle', name: 'pro_patient_prescription_new', requirements: ['id' => '\d+'])]
+    #[Route('/pro/patient/{id}/prescription/nouvelle', name: 'pro_patient_prescription_new', requirements: ['id' => '\\d+'])]
     public function nouvellePrescriptionPourPatient(User $patient, Request $request, EntityManagerInterface $entityManager): Response
     {
         if (!\in_array('ROLE_PATIENT', $patient->getRoles(), true)) {
@@ -115,7 +115,7 @@ class ProController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur professionnel non reconnu.');
         }
 
-        // On filtre les rendez-vous avec le professionnel connecte.
+        // On filtre les rendez-vous avec le professionnel connecté.
         $rendezVousList = $entityManager->getRepository(RendezVous::class)->findBy(
             ['professionnel' => $professionnel],
             ['dateHeure' => 'ASC']
@@ -131,7 +131,7 @@ class ProController extends AbstractController
     {
         $users = $entityManager->getRepository(User::class)->findAll();
 
-        // On garde uniquement les utilisateurs avec le role patient.
+        // On garde uniquement les utilisateurs avec le rôle patient.
         $patients = array_values(array_filter(
             $users,
             static fn (User $user): bool => \in_array('ROLE_PATIENT', $user->getRoles(), true)
@@ -149,7 +149,7 @@ class ProController extends AbstractController
         ]);
     }
 
-    #[Route('/pro/patient/{id}', name: 'pro_patient_show', requirements: ['id' => '\d+'])]
+    #[Route('/pro/patient/{id}', name: 'pro_patient_show', requirements: ['id' => '\\d+'])]
     public function voirPatient(User $patient, EntityManagerInterface $entityManager): Response
     {
         if (!\in_array('ROLE_PATIENT', $patient->getRoles(), true)) {

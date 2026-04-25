@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+﻿{% extends 'base.html.twig' %}
 
 {% block title %}Prendre un rendez-vous - Health NORTH{% endblock %}
 
@@ -33,7 +33,7 @@
 
                     <div class="mt-5 d-flex flex-wrap gap-3">
                         <button type="submit" class="btn btn-primary px-4">Enregistrer le rendez-vous</button>
-                        <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary px-4">Retour dashboard</a>
+                        <a href="{{ path('patient_dashboard') }}" class="btn btn-outline-secondary px-4">Retour à mon espace</a>
                     </div>
                 {{ form_end(form) }}
             </div>
@@ -41,3 +41,5 @@
     </div>
 </section>
 {% endblock %}
+
+

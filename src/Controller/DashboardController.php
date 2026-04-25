@@ -12,7 +12,7 @@ class DashboardController extends AbstractController
     public function adminDashboard(): Response
     {
         return $this->render('dashboard/dashboard.html.twig', [
-            'page_title' => 'Dashboard Admin',
+            'page_title' => 'Espace administrateur',
             'page_subtitle' => 'Vue de pilotage globale de la plateforme.',
             'role_label' => 'ROLE_ADMIN',
             'cards' => [
@@ -25,7 +25,7 @@ class DashboardController extends AbstractController
                 [
                     'title' => 'Établissements',
                     'text' => 'Vérifier les cliniques, laboratoires et centres.',
-                    'action' => 'Voir les etablissements',
+                    'action' => 'Voir les établissements',
                     'link' => '/admin/etablissements',
                 ],
                 [
@@ -37,7 +37,7 @@ class DashboardController extends AbstractController
                 [
                     'title' => 'Médicaments',
                     'text' => 'Gérer la liste des médicaments.',
-                    'action' => 'Voir les medicaments',
+                    'action' => 'Voir les médicaments',
                     'link' => '/admin/medicaments',
                 ],
             ],
@@ -48,7 +48,7 @@ class DashboardController extends AbstractController
     public function proDashboard(): Response
     {
         return $this->render('dashboard/dashboard.html.twig', [
-            'page_title' => 'Dashboard Professionnel',
+            'page_title' => 'Espace professionnel',
             'page_subtitle' => 'Espace du médecin pour organiser les soins.',
             'role_label' => 'ROLE_PRO',
             'cards' => [
@@ -83,9 +83,9 @@ class DashboardController extends AbstractController
     #[Route('/patient/dashboard', name: 'patient_dashboard')]
     public function patientDashboard(): Response
     {
-        // Dashboard patient: cartes simples et pedagogiques pour les futures pages metier.
+        // Espace patient : cartes simples et pédagogiques pour les futures pages métier.
         return $this->render('dashboard/dashboard.html.twig', [
-            'page_title' => 'Dashboard Patient',
+            'page_title' => 'Espace patient',
             'page_subtitle' => 'Espace personnel de suivi médical.',
             'role_label' => 'ROLE_PATIENT',
             'cards' => [
@@ -122,7 +122,7 @@ class DashboardController extends AbstractController
                 [
                     'title' => 'Mes résultats d’analyse',
                     'text' => 'Retrouver mes derniers résultats médicaux.',
-                    'action' => 'Voir mes resultats',
+                    'action' => 'Voir mes résultats',
                     'link' => '/patient/resultats',
                 ],
             ],

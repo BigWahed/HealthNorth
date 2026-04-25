@@ -34,7 +34,7 @@ class PrescriptionType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => 5,
-                    'placeholder' => 'Exemple: Paracétamol 1g, 3 fois par jour pendant 5 jours.',
+                    'placeholder' => 'Exemple : Paracétamol 1g, 3 fois par jour pendant 5 jours.',
                 ],
             ])
             ->add('datePrescription', DateType::class, [
@@ -58,4 +58,3 @@ class PrescriptionType extends AbstractType
         $resolver->setAllowedTypes('show_patient', 'bool');
     }
 }
-

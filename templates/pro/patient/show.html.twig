@@ -12,7 +12,7 @@
         <div class="d-flex flex-wrap gap-2">
             <a href="{{ path('pro_patient_prescription_new', {id: patient.id}) }}" class="btn btn-primary">Ajouter une prescription</a>
             <a href="{{ path('pro_patients') }}" class="btn btn-outline-primary">Retour patients</a>
-            <a href="{{ path('pro_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+            <a href="{{ path('pro_dashboard') }}" class="btn btn-outline-secondary">Retour à mon espace</a>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
             <p class="text-secondary mb-0">Aucun rendez-vous.</p>
         {% else %}
             <div class="table-responsive"><table class="table align-middle mb-0">
-                <thead><tr><th>Date et heure</th><th>Établissement</th><th>Type d'intervention</th><th>Professionnel</th><th>Statut</th></tr></thead>
+                <thead><tr><th>Date et heure</th><th>Établissement</th><th>Type d’intervention</th><th>Professionnel</th><th>Statut</th></tr></thead>
                 <tbody>
                 {% for rdv in rendezVousList %}
                     {% set statutBrut = rdv.statut|default('')|lower|trim %}
@@ -71,12 +71,12 @@
     </div>
 
     <div class="hn-card p-4 mb-4">
-        <h2 class="h5 mb-3">Résultats d'analyse du patient</h2>
+        <h2 class="h5 mb-3">Résultats d’analyse du patient</h2>
         {% if resultatsAnalyse is empty %}
-            <p class="text-secondary mb-0">Aucun résultat d'analyse.</p>
+            <p class="text-secondary mb-0">Aucun résultat d’analyse.</p>
         {% else %}
             <div class="table-responsive"><table class="table align-middle mb-0">
-                <thead><tr><th>Titre</th><th>Type d'analyse</th><th>Date</th><th>Statut</th><th>Commentaire</th></tr></thead>
+                <thead><tr><th>Titre</th><th>Type d’analyse</th><th>Date</th><th>Statut</th><th>Commentaire</th></tr></thead>
                 <tbody>{% for resultat in resultatsAnalyse %}
                     {% set statutBrut = resultat.statut|default('')|lower|trim %}
                     {% set statutAffiche = 'En attente' %}
@@ -113,3 +113,6 @@
     </div>
 </section>
 {% endblock %}
+
+
+

@@ -11,7 +11,7 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
             <a href="{{ path('admin_type_intervention_new') }}" class="btn btn-primary">Ajouter</a>
-            <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+            <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-secondary">Retour à mon espace</a>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
         {% else %}
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
-                    <thead><tr><th>Libelle</th><th>Description</th><th></th></tr></thead>
+                    <thead><tr><th>Libellé</th><th>Description</th><th></th></tr></thead>
                     <tbody>
                     {% for type in types %}
                         <tr>
@@ -48,3 +48,5 @@
     </div>
 </section>
 {% endblock %}
+
+

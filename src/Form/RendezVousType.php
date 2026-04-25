@@ -30,7 +30,7 @@ class RendezVousType extends AbstractType
                 'choice_label' => static function (TypeIntervention $typeIntervention): string {
                     $libelle = $typeIntervention->getLibelle() ?? '';
 
-                    // Finition visuelle: on affiche proprement certains accents si les fixtures sont anciennes.
+                    // Finition visuelle : on affiche proprement certains accents si les fixtures sont anciennes.
                     return str_replace(
                         ['specialisee'],
                         ['spécialisée'],
@@ -44,7 +44,7 @@ class RendezVousType extends AbstractType
             ])
             ->add('professionnel', EntityType::class, [
                 'class' => User::class,
-                // On affiche uniquement les professionnels de sante.
+                // On affiche uniquement les professionnels de santé.
                 'choices' => $options['professionnels'],
                 'choice_label' => fn (User $user): string => trim(($user->getPrenom() ?? '').' '.($user->getNom() ?? '')),
                 'label' => 'Professionnel',

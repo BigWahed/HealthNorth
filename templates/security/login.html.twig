@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+﻿{% extends 'base.html.twig' %}
 
 {% block title %}Connexion - Health NORTH{% endblock %}
 
@@ -18,8 +18,8 @@
 
             {% if app.user %}
                 <div class="alert alert-info">
-                    Tu es connecte avec {{ app.user.userIdentifier }}.
-                    <a href="{{ path('app_logout') }}" class="alert-link">Se deconnecter</a>
+                    Tu es connecté avec {{ app.user.userIdentifier }}.
+                    <a href="{{ path('app_logout') }}" class="alert-link">Se déconnecter</a>
                 </div>
             {% endif %}
 
@@ -43,10 +43,8 @@
                 <a href="{{ path('app_register') }}" class="btn btn-outline-primary btn-sm">Créer un compte patient</a>
             </div>
 
-            <p class="text-muted small mt-3 mb-0">
-                Symfony compare le mot de passe saisi avec le hash en base.
-            </p>
         </div>
     </div>
 </div>
 {% endblock %}
+

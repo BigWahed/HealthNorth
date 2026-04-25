@@ -27,7 +27,7 @@ class PatientController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
         }
 
-        // Important: on filtre toutes les donnees par l'utilisateur connecte.
+        // Important : on filtre toutes les données par l'utilisateur connecté.
         // Ainsi, un patient ne voit que son propre dossier.
         $rendezVousList = $entityManager->getRepository(RendezVous::class)->findBy(
             ['patient' => $patient],
@@ -80,16 +80,16 @@ class PatientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Le patient connecte est associe automatiquement (non saisi dans le formulaire).
+            // Le patient connecté est associé automatiquement (non saisi dans le formulaire).
             $rendezVous->setPatient($patient);
 
-            // Statut par defaut pour un nouveau rendez-vous.
+            // Statut par défaut pour un nouveau rendez-vous.
             $rendezVous->setStatut('En attente');
 
             $entityManager->persist($rendezVous);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre rendez-vous a bien ete enregistre.');
+            $this->addFlash('success', 'Votre rendez-vous a bien été enregistré.');
 
             return $this->redirectToRoute('patient_rendezvous_index');
         }
@@ -108,7 +108,7 @@ class PatientController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
         }
 
-        // On recupere uniquement les rendez-vous du patient connecte.
+        // On récupère uniquement les rendez-vous du patient connecté.
         $rendezVousList = $entityManager->getRepository(RendezVous::class)->findBy(
             ['patient' => $patient],
             ['dateHeure' => 'ASC']
@@ -128,7 +128,7 @@ class PatientController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
         }
 
-        // Filtrage par patient connecte: on n'affiche que SES prescriptions.
+        // Filtrage par patient connecté : on n'affiche que SES prescriptions.
         $prescriptions = $entityManager->getRepository(Prescription::class)->findBy(
             ['patient' => $patient],
             ['datePrescription' => 'DESC']
@@ -148,7 +148,7 @@ class PatientController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
         }
 
-        // Filtrage par patient connecte: on n'affiche que SES resultats d'analyse.
+        // Filtrage par patient connecté : on n'affiche que SES résultats d'analyse.
         $resultatsAnalyse = $entityManager->getRepository(ResultatAnalyse::class)->findBy(
             ['patient' => $patient],
             ['dateAnalyse' => 'DESC']
@@ -168,7 +168,7 @@ class PatientController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur patient non reconnu.');
         }
 
-        // Filtrage par patient connecte: on n'affiche que SES prises de medicaments.
+        // Filtrage par patient connecté : on n'affiche que SES prises de médicaments.
         $prisesMedicaments = $entityManager->getRepository(PriseMedicament::class)->findBy(
             ['patient' => $patient],
             ['id' => 'DESC']

@@ -125,7 +125,7 @@ class ApiController extends AbstractController
             return new JsonResponse(['message' => 'Utilisateur non reconnu.'], 403);
         }
 
-        // On filtre uniquement les resultats d'analyse du patient connecté.
+        // On filtre uniquement les résultats d’analyse du patient connecté.
         $resultats = $entityManager->getRepository(ResultatAnalyse::class)->findBy(
             ['patient' => $patient],
             ['dateAnalyse' => 'DESC']
@@ -145,4 +145,3 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 }
-

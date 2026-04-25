@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -89,7 +89,7 @@
             {% block nav_actions %}
                 {% if app.user %}
                     <span class="badge hn-badge align-self-center">{{ app.user.userIdentifier }}</span>
-                    <a href="{{ path('app_logout') }}" class="btn btn-outline-secondary btn-sm">Se deconnecter</a>
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-secondary btn-sm">Se déconnecter</a>
                 {% else %}
                     <a href="{{ path('app_login') }}" class="btn btn-primary btn-sm">Connexion</a>
                 {% endif %}
@@ -105,3 +105,4 @@
 {% block javascripts %}{% endblock %}
 </body>
 </html>
+

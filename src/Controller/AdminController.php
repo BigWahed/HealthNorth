@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-// Toutes les routes de ce controleur sont reservees a l'administrateur.
+// Toutes les routes de ce contrôleur sont réservées à l'administrateur.
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
@@ -41,19 +41,19 @@ class AdminController extends AbstractController
             $entityManager->persist($etablissement);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Etablissement ajoute avec succes.');
+            $this->addFlash('success', 'Établissement ajouté avec succès.');
 
             return $this->redirectToRoute('admin_etablissements');
         }
 
         return $this->render('admin/etablissement/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Ajouter un etablissement',
+            'page_title' => 'Ajouter un établissement',
             'back_route' => 'admin_etablissements',
         ]);
     }
 
-    #[Route('/admin/etablissements/{id}/modifier', name: 'admin_etablissement_edit', requirements: ['id' => '\d+'])]
+    #[Route('/admin/etablissements/{id}/modifier', name: 'admin_etablissement_edit', requirements: ['id' => '\\d+'])]
     public function modifierEtablissement(Etablissement $etablissement, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(EtablissementType::class, $etablissement);
@@ -62,28 +62,28 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Etablissement modifie avec succes.');
+            $this->addFlash('success', 'Établissement modifié avec succès.');
 
             return $this->redirectToRoute('admin_etablissements');
         }
 
         return $this->render('admin/etablissement/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Modifier un etablissement',
+            'page_title' => 'Modifier un établissement',
             'back_route' => 'admin_etablissements',
         ]);
     }
 
-    #[Route('/admin/etablissements/{id}/supprimer', name: 'admin_etablissement_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
+    #[Route('/admin/etablissements/{id}/supprimer', name: 'admin_etablissement_delete', methods: ['POST'], requirements: ['id' => '\\d+'])]
     public function supprimerEtablissement(Etablissement $etablissement, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete_etablissement_'.$etablissement->getId(), (string) $request->request->get('_token'))) {
             try {
                 $entityManager->remove($etablissement);
                 $entityManager->flush();
-                $this->addFlash('success', 'Etablissement supprime avec succes.');
+                $this->addFlash('success', 'Établissement supprimé avec succès.');
             } catch (\Throwable) {
-                $this->addFlash('danger', 'Suppression impossible: etablissement utilise par d autres donnees.');
+                $this->addFlash('danger', 'Suppression impossible : établissement utilisé par d’autres données.');
             }
         }
 
@@ -111,19 +111,19 @@ class AdminController extends AbstractController
             $entityManager->persist($typeIntervention);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Type d intervention ajoute avec succes.');
+            $this->addFlash('success', 'Type d’intervention ajouté avec succès.');
 
             return $this->redirectToRoute('admin_types_intervention');
         }
 
         return $this->render('admin/type_intervention/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Ajouter un type d intervention',
+            'page_title' => 'Ajouter un type d’intervention',
             'back_route' => 'admin_types_intervention',
         ]);
     }
 
-    #[Route('/admin/types-intervention/{id}/modifier', name: 'admin_type_intervention_edit', requirements: ['id' => '\d+'])]
+    #[Route('/admin/types-intervention/{id}/modifier', name: 'admin_type_intervention_edit', requirements: ['id' => '\\d+'])]
     public function modifierTypeIntervention(TypeIntervention $typeIntervention, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TypeInterventionType::class, $typeIntervention);
@@ -132,28 +132,28 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Type d intervention modifie avec succes.');
+            $this->addFlash('success', 'Type d’intervention modifié avec succès.');
 
             return $this->redirectToRoute('admin_types_intervention');
         }
 
         return $this->render('admin/type_intervention/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Modifier un type d intervention',
+            'page_title' => 'Modifier un type d’intervention',
             'back_route' => 'admin_types_intervention',
         ]);
     }
 
-    #[Route('/admin/types-intervention/{id}/supprimer', name: 'admin_type_intervention_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
+    #[Route('/admin/types-intervention/{id}/supprimer', name: 'admin_type_intervention_delete', methods: ['POST'], requirements: ['id' => '\\d+'])]
     public function supprimerTypeIntervention(TypeIntervention $typeIntervention, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete_type_intervention_'.$typeIntervention->getId(), (string) $request->request->get('_token'))) {
             try {
                 $entityManager->remove($typeIntervention);
                 $entityManager->flush();
-                $this->addFlash('success', 'Type d intervention supprime avec succes.');
+                $this->addFlash('success', 'Type d’intervention supprimé avec succès.');
             } catch (\Throwable) {
-                $this->addFlash('danger', 'Suppression impossible: type d intervention utilise par d autres donnees.');
+                $this->addFlash('danger', 'Suppression impossible : type d’intervention utilisé par d’autres données.');
             }
         }
 
@@ -181,19 +181,19 @@ class AdminController extends AbstractController
             $entityManager->persist($medicament);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Medicament ajoute avec succes.');
+            $this->addFlash('success', 'Médicament ajouté avec succès.');
 
             return $this->redirectToRoute('admin_medicaments');
         }
 
         return $this->render('admin/medicament/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Ajouter un medicament',
+            'page_title' => 'Ajouter un médicament',
             'back_route' => 'admin_medicaments',
         ]);
     }
 
-    #[Route('/admin/medicaments/{id}/modifier', name: 'admin_medicament_edit', requirements: ['id' => '\d+'])]
+    #[Route('/admin/medicaments/{id}/modifier', name: 'admin_medicament_edit', requirements: ['id' => '\\d+'])]
     public function modifierMedicament(Medicament $medicament, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MedicamentType::class, $medicament);
@@ -202,28 +202,28 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Medicament modifie avec succes.');
+            $this->addFlash('success', 'Médicament modifié avec succès.');
 
             return $this->redirectToRoute('admin_medicaments');
         }
 
         return $this->render('admin/medicament/form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Modifier un medicament',
+            'page_title' => 'Modifier un médicament',
             'back_route' => 'admin_medicaments',
         ]);
     }
 
-    #[Route('/admin/medicaments/{id}/supprimer', name: 'admin_medicament_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
+    #[Route('/admin/medicaments/{id}/supprimer', name: 'admin_medicament_delete', methods: ['POST'], requirements: ['id' => '\\d+'])]
     public function supprimerMedicament(Medicament $medicament, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete_medicament_'.$medicament->getId(), (string) $request->request->get('_token'))) {
             try {
                 $entityManager->remove($medicament);
                 $entityManager->flush();
-                $this->addFlash('success', 'Medicament supprime avec succes.');
+                $this->addFlash('success', 'Médicament supprimé avec succès.');
             } catch (\Throwable) {
-                $this->addFlash('danger', 'Suppression impossible: medicament utilise par d autres donnees.');
+                $this->addFlash('danger', 'Suppression impossible : médicament utilisé par d’autres données.');
             }
         }
 
@@ -233,7 +233,7 @@ class AdminController extends AbstractController
     #[Route('/admin/utilisateurs', name: 'admin_utilisateurs')]
     public function utilisateurs(EntityManagerInterface $entityManager): Response
     {
-        // Vue simple de consultation, sans gestion avancee de mot de passe.
+        // Vue simple de consultation, sans gestion avancée de mot de passe.
         $utilisateurs = $entityManager->getRepository(User::class)->findBy([], ['nom' => 'ASC', 'prenom' => 'ASC']);
 
         return $this->render('admin/utilisateur/index.html.twig', [
@@ -241,4 +241,3 @@ class AdminController extends AbstractController
         ]);
     }
 }
-

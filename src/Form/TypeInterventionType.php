@@ -15,7 +15,7 @@ class TypeInterventionType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'Libelle',
+                'label' => 'Libellé',
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => ['class' => 'form-control'],
             ])
@@ -36,4 +36,5 @@ class TypeInterventionType extends AbstractType
         ]);
     }
 }
+
 

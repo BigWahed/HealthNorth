@@ -71,7 +71,7 @@
 {% block nav_actions %}
     {% if app.user and dashboard_route %}
         <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-sm">Accueil</a>
-        <a href="{{ path(dashboard_route) }}" class="btn btn-primary btn-sm">Mon dashboard</a>
+        <a href="{{ path(dashboard_route) }}" class="btn btn-primary btn-sm">Mon espace</a>
         <a href="{{ path('app_logout') }}" class="btn btn-outline-secondary btn-sm">Déconnexion</a>
     {% else %}
         <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-sm">Accueil</a>
@@ -324,3 +324,4 @@
     Health NORTH - Plateforme fictive pédagogique BTS SIO SLAM.
 </footer>
 {% endblock %}
+

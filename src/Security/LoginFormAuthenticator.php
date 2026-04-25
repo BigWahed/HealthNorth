@@ -37,7 +37,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             new UserBadge($email),
-            // Symfony compare ici le mot de passe saisi avec le hash stocke en base.
+            // Symfony compare ici le mot de passe saisi avec le hash stocké en base.
             new PasswordCredentials($password),
             [
                 new CsrfTokenBadge('authenticate', $csrfToken),
@@ -50,23 +50,23 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
 
         if ($user instanceof User) {
-            $roles = $user->getRoles();
+            $rôles = $user->getRoles();
 
-            if (\in_array('ROLE_ADMIN', $roles, true)) {
+            if (\in_array('ROLE_ADMIN', $rôles, true)) {
                 return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
             }
 
-            if (\in_array('ROLE_PRO', $roles, true)) {
+            if (\in_array('ROLE_PRO', $rôles, true)) {
                 return new RedirectResponse($this->urlGenerator->generate('pro_dashboard'));
             }
 
-            if (\in_array('ROLE_PATIENT', $roles, true)) {
+            if (\in_array('ROLE_PATIENT', $rôles, true)) {
                 return new RedirectResponse($this->urlGenerator->generate('patient_dashboard'));
             }
         }
 
-        // Pour un projet pedagogique, on priorise la redirection par role.
-        // Si aucun role specifique, on reprend la cible demandee initialement.
+        // Pour un projet pédagogique, on priorise la redirection par rôle.
+        // Si aucun rôle spécifique, on reprend la cible demandée initialement.
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -79,3 +79,4 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
+

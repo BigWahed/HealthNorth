@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
             ->setCodePostal('69003');
 
         $etabLille = (new Etablissement())
-            ->setNom('Centre d imagerie Health NORTH Lille')
+            ->setNom('Centre d’imagerie Health NORTH Lille')
             ->setType('Imagerie')
             ->setAdresse('5 Boulevard Pasteur')
             ->setVille('Lille')
@@ -103,18 +103,18 @@ class AppFixtures extends Fixture
         $manager->persist($etabLille);
 
         // -----------------------------
-        // 3) Types d intervention
+        // 3) Types d’intervention
         // -----------------------------
         $typeAnalyse = (new TypeIntervention())
             ->setLibelle('Analyse sanguine')
             ->setDescription('Examen biologique de controle.');
 
         $typeConsult = (new TypeIntervention())
-            ->setLibelle('Consultation specialisee')
-            ->setDescription('Consultation avec un professionnel specialise.');
+            ->setLibelle('Consultation spécialisée')
+            ->setDescription('Consultation avec un professionnel spécialisé.');
 
         $typeImagerie = (new TypeIntervention())
-            ->setLibelle('Imagerie medicale')
+            ->setLibelle('Imagerie médicale')
             ->setDescription('Examen radiologique ou scanner.');
 
         $typeHospit = (new TypeIntervention())
@@ -130,16 +130,16 @@ class AppFixtures extends Fixture
         // 4) Medicaments
         // -----------------------------
         $paracetamol = (new Medicament())
-            ->setNom('Paracetamol')
-            ->setDescription('Antalgique et antipuretique.');
+            ->setNom('Paracétamol')
+            ->setDescription('Antalgique et antipyrétique.');
 
         $amoxicilline = (new Medicament())
             ->setNom('Amoxicilline')
             ->setDescription('Antibiotique de la famille des penicillines.');
 
         $ibuprofene = (new Medicament())
-            ->setNom('Ibuprofene')
-            ->setDescription('Anti inflammatoire non steroidien.');
+            ->setNom('Ibuprofène')
+            ->setDescription('Anti-inflammatoire non stéroïdien.');
 
         $manager->persist($paracetamol);
         $manager->persist($amoxicilline);
@@ -172,7 +172,7 @@ class AppFixtures extends Fixture
             ->setEtablissement($etabLille)
             ->setTypeIntervention($typeImagerie);
 
-        // On ajoute un 2e rendez-vous pour patient2 pour avoir assez de donnees de test.
+        // On ajoute un 2e rendez-vous pour patient2 pour avoir assez de données de test.
         $rdv4 = (new RendezVous())
             ->setDateHeure(new \DateTimeImmutable('2026-05-10 11:00:00'))
             ->setStatut('en attente')
@@ -205,10 +205,10 @@ class AppFixtures extends Fixture
         $manager->persist($prescription2);
 
         // -----------------------------
-        // 7) Prises de medicaments
+        // 7) Prises de médicaments
         // -----------------------------
         $prise1 = (new PriseMedicament())
-            ->setPosologie('1 comprime de 1g')
+            ->setPosologie('1 comprimé de 1g')
             ->setFrequence('3 fois par jour')
             ->setMomentPrise('matin-midi-soir')
             ->setPatient($patient1)
@@ -216,7 +216,7 @@ class AppFixtures extends Fixture
             ->setPrescription($prescription1);
 
         $prise2 = (new PriseMedicament())
-            ->setPosologie('1 gelule de 500mg')
+            ->setPosologie('1 gélule de 500mg')
             ->setFrequence('2 fois par jour')
             ->setMomentPrise('matin-soir')
             ->setPatient($patient2)
@@ -236,7 +236,7 @@ class AppFixtures extends Fixture
         $manager->persist($prise3);
 
         // -----------------------------
-        // 8) Resultats d analyse
+        // 8) Résultats d’analyse
         // -----------------------------
         $resultat1 = (new ResultatAnalyse())
             ->setTitre('Bilan sanguin complet')
@@ -251,7 +251,7 @@ class AppFixtures extends Fixture
             ->setTypeAnalyse('Biologie')
             ->setDateAnalyse(new \DateTimeImmutable('2026-05-06'))
             ->setStatut('en attente')
-            ->setCommentaire('Resultat en cours de validation.')
+            ->setCommentaire('Résultat en cours de validation.')
             ->setPatient($patient2);
 
         $resultat3 = (new ResultatAnalyse())
@@ -259,7 +259,7 @@ class AppFixtures extends Fixture
             ->setTypeAnalyse('Imagerie')
             ->setDateAnalyse(new \DateTimeImmutable('2026-05-08'))
             ->setStatut('valide')
-            ->setCommentaire('Inflammation legere observee.')
+            ->setCommentaire('Inflammation légère observée.')
             ->setPatient($patient1);
 
         $manager->persist($resultat1);
