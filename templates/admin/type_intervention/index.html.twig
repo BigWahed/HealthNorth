@@ -1,0 +1,50 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Types d'intervention - Health NORTH{% endblock %}
+
+{% block body %}
+<section class="hn-section-gap">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h1 class="h3 mb-2">Gestion des types d'intervention</h1>
+            <p class="text-secondary mb-0">Liste, ajout, modification et suppression.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('admin_type_intervention_new') }}" class="btn btn-primary">Ajouter</a>
+            <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-secondary">Retour dashboard</a>
+        </div>
+    </div>
+
+    {% for message in app.flashes('success') %}<div class="alert alert-success">{{ message }}</div>{% endfor %}
+    {% for message in app.flashes('danger') %}<div class="alert alert-danger">{{ message }}</div>{% endfor %}
+
+    <div class="hn-card p-4">
+        {% if types is empty %}
+            <p class="text-secondary mb-0">Aucun type d'intervention.</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Libelle</th><th>Description</th><th></th></tr></thead>
+                    <tbody>
+                    {% for type in types %}
+                        <tr>
+                            <td>{{ type.libelle }}</td>
+                            <td>{{ type.description }}</td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{{ path('admin_type_intervention_edit', {id: type.id}) }}" class="btn btn-outline-primary btn-sm">Modifier</a>
+                                    <form method="post" action="{{ path('admin_type_intervention_delete', {id: type.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete_type_intervention_' ~ type.id) }}">
+                                        <button class="btn btn-outline-danger btn-sm">Supprimer</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

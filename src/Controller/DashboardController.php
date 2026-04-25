@@ -18,18 +18,27 @@ class DashboardController extends AbstractController
             'cards' => [
                 [
                     'title' => 'Utilisateurs',
-                    'text' => 'Consulter les comptes et verifier les roles.',
+                    'text' => 'Consulter les comptes et vérifier les rôles.',
                     'action' => 'Voir les utilisateurs',
+                    'link' => '/admin/utilisateurs',
                 ],
                 [
-                    'title' => 'Etablissements',
-                    'text' => 'Verifier les cliniques, laboratoires et centres.',
+                    'title' => 'Établissements',
+                    'text' => 'Vérifier les cliniques, laboratoires et centres.',
                     'action' => 'Voir les etablissements',
+                    'link' => '/admin/etablissements',
                 ],
                 [
-                    'title' => 'Suivi technique',
-                    'text' => 'Controler le bon fonctionnement de la plateforme.',
-                    'action' => 'Voir le suivi',
+                    'title' => 'Types d’intervention',
+                    'text' => 'Gérer les types d’intervention proposés.',
+                    'action' => 'Voir les types',
+                    'link' => '/admin/types-intervention',
+                ],
+                [
+                    'title' => 'Médicaments',
+                    'text' => 'Gérer la liste des médicaments.',
+                    'action' => 'Voir les medicaments',
+                    'link' => '/admin/medicaments',
                 ],
             ],
         ]);
@@ -40,23 +49,32 @@ class DashboardController extends AbstractController
     {
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Dashboard Professionnel',
-            'page_subtitle' => 'Espace du medecin pour organiser les soins.',
+            'page_subtitle' => 'Espace du médecin pour organiser les soins.',
             'role_label' => 'ROLE_PRO',
             'cards' => [
                 [
                     'title' => 'Rendez-vous',
-                    'text' => 'Visualiser les rendez-vous planifies.',
+                    'text' => 'Visualiser les rendez-vous planifiés.',
                     'action' => 'Voir les rendez-vous',
+                    'link' => '/pro/rendez-vous',
                 ],
                 [
-                    'title' => 'Prescriptions',
-                    'text' => 'Consulter et preparer les ordonnances.',
-                    'action' => 'Voir les prescriptions',
+                    'title' => 'Patients',
+                    'text' => 'Consulter la liste des patients et accéder au dossier.',
+                    'action' => 'Voir les patients',
+                    'link' => '/pro/patients',
                 ],
                 [
-                    'title' => 'Resultats d analyse',
+                    'title' => 'Ajouter une prescription',
+                    'text' => 'Créer rapidement une prescription pour un patient.',
+                    'action' => 'Nouvelle prescription',
+                    'link' => '/pro/prescription/nouvelle',
+                ],
+                [
+                    'title' => 'Résultats d’analyse',
                     'text' => 'Suivre les examens et leurs statuts.',
-                    'action' => 'Voir les resultats',
+                    'action' => 'Voir les résultats',
+                    'link' => '/pro/resultats',
                 ],
             ],
         ]);

@@ -1,0 +1,37 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Inscription patient - Health NORTH{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <div class="hn-card shadow-sm p-4 p-md-5">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+                <h1 class="h4 mb-0">Créer un compte patient</h1>
+                <a href="{{ path('app_login') }}" class="btn btn-outline-secondary btn-sm">Retour connexion</a>
+            </div>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+
+            {{ form_start(registrationForm) }}
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.nom) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.prenom) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.email) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.plainPassword) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.dateNaissance) }}</div>
+                    <div class="col-12 col-md-6">{{ form_row(registrationForm.telephone) }}</div>
+                    <div class="col-12">{{ form_row(registrationForm.adresse) }}</div>
+                </div>
+
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">Créer mon compte</button>
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-secondary">J'ai déjà un compte</a>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

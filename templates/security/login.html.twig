@@ -12,6 +12,10 @@
                 <div class="alert alert-danger">Email ou mot de passe invalide.</div>
             {% endif %}
 
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+
             {% if app.user %}
                 <div class="alert alert-info">
                     Tu es connecte avec {{ app.user.userIdentifier }}.
@@ -35,7 +39,11 @@
                 <button class="btn btn-primary w-100 btn-lg" type="submit">Connexion</button>
             </form>
 
-            <p class="text-muted small mt-4 mb-0">
+            <div class="mt-4 d-flex justify-content-center">
+                <a href="{{ path('app_register') }}" class="btn btn-outline-primary btn-sm">Créer un compte patient</a>
+            </div>
+
+            <p class="text-muted small mt-3 mb-0">
                 Symfony compare le mot de passe saisi avec le hash en base.
             </p>
         </div>

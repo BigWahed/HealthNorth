@@ -25,6 +25,37 @@
             border-bottom: 1px solid var(--hn-border);
         }
 
+        .hn-brand-logo {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .hn-brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .hn-brand-separator {
+            width: 1px;
+            height: 36px;
+            background: #d6e3f4;
+        }
+
+        .hn-brand-text {
+            font-weight: 800;
+            font-size: 1.55rem;
+            color: #0b2b4d;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .hn-brand-north {
+            color: #2ea8ff;
+        }
+
         .hn-card {
             border: 1px solid var(--hn-border);
             border-radius: 14px;
@@ -47,14 +78,22 @@
 <body>
 <nav class="navbar navbar-expand-lg hn-navbar">
     <div class="container py-2">
-        <span class="navbar-brand fw-semibold mb-0">Health NORTH</span>
+        <a href="{{ path('app_home') }}" class="navbar-brand mb-0 hn-brand-link" aria-label="Accueil Health NORTH">
+            <img src="/images/logo/logohealthnorth.png" alt="Logo Health NORTH" class="hn-brand-logo">
+            <span class="hn-brand-separator" aria-hidden="true"></span>
+            <span class="hn-brand-text">
+                Health <span class="hn-brand-north">NORTH</span>
+            </span>
+        </a>
         <div class="ms-auto d-flex gap-2">
-            {% if app.user %}
-                <span class="badge hn-badge align-self-center">{{ app.user.userIdentifier }}</span>
-                <a href="{{ path('app_logout') }}" class="btn btn-outline-secondary btn-sm">Se deconnecter</a>
-            {% else %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary btn-sm">Connexion</a>
-            {% endif %}
+            {% block nav_actions %}
+                {% if app.user %}
+                    <span class="badge hn-badge align-self-center">{{ app.user.userIdentifier }}</span>
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-secondary btn-sm">Se deconnecter</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-primary btn-sm">Connexion</a>
+                {% endif %}
+            {% endblock %}
         </div>
     </div>
 </nav>
