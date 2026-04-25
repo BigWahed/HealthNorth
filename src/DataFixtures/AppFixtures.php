@@ -172,9 +172,19 @@ class AppFixtures extends Fixture
             ->setEtablissement($etabLille)
             ->setTypeIntervention($typeImagerie);
 
+        // On ajoute un 2e rendez-vous pour patient2 pour avoir assez de donnees de test.
+        $rdv4 = (new RendezVous())
+            ->setDateHeure(new \DateTimeImmutable('2026-05-10 11:00:00'))
+            ->setStatut('en attente')
+            ->setPatient($patient2)
+            ->setProfessionnel($professionnel)
+            ->setEtablissement($etabParis)
+            ->setTypeIntervention($typeHospit);
+
         $manager->persist($rdv1);
         $manager->persist($rdv2);
         $manager->persist($rdv3);
+        $manager->persist($rdv4);
 
         // -----------------------------
         // 6) Prescriptions
