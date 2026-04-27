@@ -65,8 +65,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             }
         }
 
-        // Pour un projet pédagogique, on priorise la redirection par rôle.
-        // Si aucun rôle spécifique, on reprend la cible demandée initialement.
+        // Si aucun role specifique, on reprend la cible demandee initialement.
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }

@@ -20,9 +20,8 @@ class ApiController extends AbstractController
     #[Route('/api/mobile/patient/{id}/dossier', name: 'api_mobile_patient_dossier', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function mobilePatientDossier(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
-        // Version simplifiee pour le projet scolaire (BTS) :
-        // l'application mobile passe l'id du patient dans l'URL.
-        // En production, on utiliserait un token securise (JWT ou equivalent).
+        // Version mobile basee sur l'identifiant passe dans l'URL.
+        // En production, il faut une authentification par token securise.
         $patient = $entityManager->getRepository(User::class)->find($id);
 
         if (!$patient instanceof User) {
@@ -102,7 +101,7 @@ class ApiController extends AbstractController
                 'id' => $type->getId(),
                 'libelle' => $type->getLibelle(),
                 'description' => $type->getDescription(),
-                // Statut fixe en V1 simplifiee.
+                // Statut fixe.
                 'statut' => 'actif',
             ];
         }, $types);

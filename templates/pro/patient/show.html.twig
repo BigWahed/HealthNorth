@@ -37,8 +37,8 @@
             <div class="col-12 col-md-6"><strong>Prénom :</strong> {{ patient.prenom }}</div>
             <div class="col-12 col-md-6"><strong>Email :</strong> {{ patient.email }}</div>
             <div class="col-12 col-md-6"><strong>Téléphone :</strong> {{ patient.telephone }}</div>
-            <div class="col-12 col-md-8"><strong>Adresse :</strong> {{ patient.adresse }}</div>
-            <div class="col-12 col-md-4"><strong>Date de naissance :</strong> {{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '-' }}</div>
+            <div class="col-12 col-md-6"><strong>Adresse :</strong> {{ patient.adresse }}</div>
+            <div class="col-12 col-md-6"><strong>Date de naissance :</strong> {{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '-' }}</div>
             <div class="col-12 col-md-6"><strong>Numéro de sécurité sociale :</strong> {{ patient.numeroSecuriteSociale ?: '-' }}</div>
             <div class="col-12 col-md-6"><strong>Personne à contacter :</strong> {{ patient.personneContact ?: '-' }}</div>
             <div class="col-12 col-md-6"><strong>Téléphone de la personne à contacter :</strong> {{ patient.telephonePersonneContact ?: '-' }}</div>

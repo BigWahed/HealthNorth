@@ -233,7 +233,6 @@ class AdminController extends AbstractController
     #[Route('/admin/utilisateurs', name: 'admin_utilisateurs')]
     public function utilisateurs(EntityManagerInterface $entityManager): Response
     {
-        // Vue simple de consultation, sans gestion avancée de mot de passe.
         $utilisateurs = $entityManager->getRepository(User::class)->findBy([], ['nom' => 'ASC', 'prenom' => 'ASC']);
 
         return $this->render('admin/utilisateur/index.html.twig', [

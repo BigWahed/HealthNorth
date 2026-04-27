@@ -1,7 +1,7 @@
 ﻿# Installation - Health NORTH
 
 ## 1) Présentation rapide du projet
-Health NORTH est une application Symfony de suivi médical (projet pédagogique BTS SIO SLAM).  
+Health NORTH est une application Symfony de suivi médical.  
 Elle permet :
 - l'inscription et la connexion des utilisateurs,
 - un espace patient,
@@ -112,14 +112,14 @@ Important :
 - la connexion reste basée sur `email + mot de passe`,
 - le numéro de sécurité sociale n'est pas utilisé pour l'authentification.
 
-## 14) Explication simple de l'architecture MVC
+## 14) Architecture MVC
 - **Model** : les entités Doctrine (`src/Entity`) + base de données.  
 - **View** : les pages Twig (`templates`).  
 - **Controller** : la logique applicative (`src/Controller`) qui relie les données et les vues.
 
 En résumé : le contrôleur reçoit la requête, récupère les données (Model), puis affiche une vue Twig (View).
 
-## 15) Rôle de l'API (explication simple)
+## 15) Rôle de l'API
 L'API permet d'exposer certaines données en JSON (sans page HTML).  
 Elle sert surtout à :
 - connecter plus tard une application mobile,

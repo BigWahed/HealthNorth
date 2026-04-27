@@ -83,7 +83,6 @@ class DashboardController extends AbstractController
     #[Route('/patient/dashboard', name: 'patient_dashboard')]
     public function patientDashboard(): Response
     {
-        // Espace patient : cartes simples et pédagogiques pour les futures pages métier.
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Espace patient',
             'page_subtitle' => 'Espace personnel de suivi médical.',

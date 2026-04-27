@@ -7,8 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Repository simple pour l'entite User.
- * Ici, on utilise surtout findOneBy(['email' => ...]) pour le login API.
+ * Repository pour l'entite User.
  */
 class UserRepository extends ServiceEntityRepository
 {
@@ -17,4 +16,3 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 }
-

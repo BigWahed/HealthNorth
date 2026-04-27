@@ -23,7 +23,7 @@ class SecurityController extends AbstractController
         // 1) On lit le JSON envoye par l'application mobile.
         $payload = json_decode($request->getContent(), true);
 
-        // Si le JSON est invalide ou vide, on renvoie la meme erreur simple.
+        // Si le JSON est invalide ou vide, on renvoie la meme erreur.
         if (!\is_array($payload)) {
             return new JsonResponse([
                 'success' => false,
@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
         }
 
         // 5) Si OK, on renvoie les informations utiles pour l'app mobile.
-        // Note: dans une vraie application mobile, on renverrait un token securise (ex: JWT).
+        // Note: en production, utiliser une authentification par token securise.
         return new JsonResponse([
             'success' => true,
             'user' => [
