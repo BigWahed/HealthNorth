@@ -2,6 +2,11 @@
 
 {% block title %}Connexion - Health NORTH{% endblock %}
 
+{% block nav_actions %}
+    <a href="{{ path('app_login') }}" class="btn btn-primary btn-sm">Connexion</a>
+    <a href="{{ path('app_register') }}" class="btn btn-outline-secondary btn-sm">S’inscrire</a>
+{% endblock %}
+
 {% block body %}
 <div class="row justify-content-center">
     <div class="col-md-7 col-lg-5">

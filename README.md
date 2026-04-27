@@ -1,7 +1,5 @@
 # Health NORTH - Setup de base (Symfony + Doctrine)
 
-Ce projet est prepare pour un demarrage simple et pedagogique (niveau BTS SIO SLAM).
-
 ## 1) Verification rapide
 
 Lancer:
@@ -24,6 +22,7 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/health_north?serverVersion=10.4.32-Ma
 ```
 
 Explication:
+
 - `root` = utilisateur MySQL local (XAMPP classique)
 - mot de passe vide apres `root:` (a adapter si besoin)
 - `health_north` = nom de la base
@@ -52,8 +51,7 @@ php bin/console doctrine:migrations:migrate
 ## 4) Important pour la suite
 
 Pour cette etape, on ne cree pas encore:
+
 - pages
 - authentification
 - API
-
-

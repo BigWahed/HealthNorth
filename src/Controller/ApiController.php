@@ -52,6 +52,34 @@ class ApiController extends AbstractController
     }
 
     #[IsGranted('ROLE_PATIENT')]
+    #[Route('/api/patient/dossier', name: 'api_patient_dossier', methods: ['GET'])]
+    public function patientDossier(): JsonResponse
+    {
+        $patient = $this->getUser();
+
+        if (!$patient instanceof User) {
+            return new JsonResponse(['message' => 'Utilisateur non reconnu.'], 403);
+        }
+
+        // Cette route expose uniquement le dossier du patient connecte.
+        // La connexion reste basee sur email + mot de passe (pas sur le numero de securite sociale).
+        return new JsonResponse([
+            'id' => $patient->getId(),
+            'nom' => $patient->getNom(),
+            'prenom' => $patient->getPrenom(),
+            'email' => $patient->getEmail(),
+            'telephone' => $patient->getTelephone(),
+            'adresse' => $patient->getAdresse(),
+            'dateNaissance' => $patient->getDateNaissance()?->format('Y-m-d'),
+            'photo' => $patient->getPhoto(),
+            'numeroSecuriteSociale' => $patient->getNumeroSecuriteSociale(),
+            'personneContact' => $patient->getPersonneContact(),
+            'telephonePersonneContact' => $patient->getTelephonePersonneContact(),
+            'medecinTraitant' => $patient->getMedecinTraitant(),
+        ]);
+    }
+
+    #[IsGranted('ROLE_PATIENT')]
     #[Route('/api/patient/rendez-vous', name: 'api_patient_rendezvous', methods: ['GET'])]
     public function patientRendezVous(EntityManagerInterface $entityManager): JsonResponse
     {

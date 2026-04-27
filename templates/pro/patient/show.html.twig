@@ -19,12 +19,30 @@
     <div class="hn-card p-4 mb-4">
         <h2 class="h5 mb-3">Informations personnelles</h2>
         <div class="row g-3">
+            <div class="col-12">
+                <strong>Photo :</strong>
+                {% if patient.photo %}
+                    <div class="mt-2">
+                        <img
+                            src="{{ '/images/patients/' ~ patient.photo }}"
+                            alt="Photo de {{ patient.prenom }} {{ patient.nom }}"
+                            style="max-width: 140px; border-radius: 8px;"
+                        >
+                    </div>
+                {% else %}
+                    <span class="text-secondary">-</span>
+                {% endif %}
+            </div>
             <div class="col-12 col-md-6"><strong>Nom :</strong> {{ patient.nom }}</div>
             <div class="col-12 col-md-6"><strong>Prénom :</strong> {{ patient.prenom }}</div>
             <div class="col-12 col-md-6"><strong>Email :</strong> {{ patient.email }}</div>
             <div class="col-12 col-md-6"><strong>Téléphone :</strong> {{ patient.telephone }}</div>
             <div class="col-12 col-md-8"><strong>Adresse :</strong> {{ patient.adresse }}</div>
             <div class="col-12 col-md-4"><strong>Date de naissance :</strong> {{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '-' }}</div>
+            <div class="col-12 col-md-6"><strong>Numéro de sécurité sociale :</strong> {{ patient.numeroSecuriteSociale ?: '-' }}</div>
+            <div class="col-12 col-md-6"><strong>Personne à contacter :</strong> {{ patient.personneContact ?: '-' }}</div>
+            <div class="col-12 col-md-6"><strong>Téléphone de la personne à contacter :</strong> {{ patient.telephonePersonneContact ?: '-' }}</div>
+            <div class="col-12 col-md-6"><strong>Médecin traitant :</strong> {{ patient.medecinTraitant ?: '-' }}</div>
         </div>
     </div>
 

@@ -14,7 +14,7 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Espace administrateur',
             'page_subtitle' => 'Vue de pilotage globale de la plateforme.',
-            'role_label' => 'ROLE_ADMIN',
+            'role_label' => 'Administration',
             'cards' => [
                 [
                     'title' => 'Utilisateurs',
@@ -50,7 +50,7 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Espace professionnel',
             'page_subtitle' => 'Espace du médecin pour organiser les soins.',
-            'role_label' => 'ROLE_PRO',
+            'role_label' => 'Professionnel de sante',
             'cards' => [
                 [
                     'title' => 'Rendez-vous',
@@ -87,7 +87,7 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/dashboard.html.twig', [
             'page_title' => 'Espace patient',
             'page_subtitle' => 'Espace personnel de suivi médical.',
-            'role_label' => 'ROLE_PATIENT',
+            'role_label' => 'Suivi personnel',
             'cards' => [
                 [
                     'title' => 'Prendre un rendez-vous',

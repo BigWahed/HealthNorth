@@ -56,7 +56,13 @@ class AppFixtures extends Fixture
             ->setPrenom('Lucas')
             ->setDateNaissance(new \DateTimeImmutable('1999-03-15'))
             ->setTelephone('0600000003')
-            ->setAdresse('8 Rue Victor Hugo, Lyon');
+            ->setAdresse('8 Rue Victor Hugo, Lyon')
+            // Donnees de dossier patient (utiles pour la partie mobile).
+            ->setPhoto('patient1.png')
+            ->setNumeroSecuriteSociale('199037512345678')
+            ->setPersonneContact('Marie Dupont')
+            ->setTelephonePersonneContact('0600000010')
+            ->setMedecinTraitant('Dr Julie Martin');
         $patient1->setPassword($this->passwordHasher->hashPassword($patient1, $plainPassword));
 
         $patient2 = (new User())
@@ -66,7 +72,13 @@ class AppFixtures extends Fixture
             ->setPrenom('Emma')
             ->setDateNaissance(new \DateTimeImmutable('2001-11-02'))
             ->setTelephone('0600000004')
-            ->setAdresse('25 Rue Nationale, Lille');
+            ->setAdresse('25 Rue Nationale, Lille')
+            // Donnees de dossier patient (utiles pour la partie mobile).
+            ->setPhoto('patient2.png')
+            ->setNumeroSecuriteSociale('298047598765432')
+            ->setPersonneContact('Karim Bernard')
+            ->setTelephonePersonneContact('0600000020')
+            ->setMedecinTraitant('Dr Paul Leroy');
         $patient2->setPassword($this->passwordHasher->hashPassword($patient2, $plainPassword));
 
         $manager->persist($admin);

@@ -9,6 +9,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Entite User :
  * represente une personne de l'application (patient ou professionnel).
+ *
+ * Les champs ajoutes plus bas (photo, numeroSecuriteSociale, personneContact, etc.)
+ * servent uniquement a enrichir le dossier patient (web + application mobile).
+ * Ils ne sont pas utilises pour l'authentification, qui reste email + mot de passe.
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'app_user')]
@@ -45,6 +49,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
+    #[ORM\Column(length: 30, nullable: true)]
+    private ?string $numeroSecuriteSociale = null;
+
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $personneContact = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $telephonePersonneContact = null;
+
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $medecinTraitant = null;
 
     public function __construct()
     {
@@ -174,6 +193,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getNumeroSecuriteSociale(): ?string
+    {
+        return $this->numeroSecuriteSociale;
+    }
+
+    public function setNumeroSecuriteSociale(?string $numeroSecuriteSociale): static
+    {
+        $this->numeroSecuriteSociale = $numeroSecuriteSociale;
+
+        return $this;
+    }
+
+    public function getPersonneContact(): ?string
+    {
+        return $this->personneContact;
+    }
+
+    public function setPersonneContact(?string $personneContact): static
+    {
+        $this->personneContact = $personneContact;
+
+        return $this;
+    }
+
+    public function getTelephonePersonneContact(): ?string
+    {
+        return $this->telephonePersonneContact;
+    }
+
+    public function setTelephonePersonneContact(?string $telephonePersonneContact): static
+    {
+        $this->telephonePersonneContact = $telephonePersonneContact;
+
+        return $this;
+    }
+
+    public function getMedecinTraitant(): ?string
+    {
+        return $this->medecinTraitant;
+    }
+
+    public function setMedecinTraitant(?string $medecinTraitant): static
+    {
+        $this->medecinTraitant = $medecinTraitant;
 
         return $this;
     }

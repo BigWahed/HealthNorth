@@ -15,12 +15,30 @@
     <div class="hn-card p-4 mb-4">
         <h2 class="h5 mb-3">Informations personnelles</h2>
         <div class="row g-3">
+            <div class="col-12">
+                <strong>Photo :</strong>
+                {% if patient.photo %}
+                    <div class="mt-2">
+                        <img
+                            src="{{ '/images/patients/' ~ patient.photo }}"
+                            alt="Photo de {{ patient.prenom }} {{ patient.nom }}"
+                            style="max-width: 140px; border-radius: 8px;"
+                        >
+                    </div>
+                {% else %}
+                    <span class="text-secondary">-</span>
+                {% endif %}
+            </div>
             <div class="col-12 col-md-6"><div><strong>Nom :</strong> {{ patient.nom }}</div></div>
             <div class="col-12 col-md-6"><div><strong>Prénom :</strong> {{ patient.prenom }}</div></div>
             <div class="col-12 col-md-6"><div><strong>Email :</strong> {{ patient.email }}</div></div>
             <div class="col-12 col-md-6"><div><strong>Téléphone :</strong> {{ patient.telephone }}</div></div>
             <div class="col-12 col-md-8"><div><strong>Adresse :</strong> {{ patient.adresse }}</div></div>
             <div class="col-12 col-md-4"><div><strong>Date de naissance :</strong> {{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '-' }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Numéro de sécurité sociale :</strong> {{ patient.numeroSecuriteSociale ?: '-' }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Personne à contacter :</strong> {{ patient.personneContact ?: '-' }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Téléphone de la personne à contacter :</strong> {{ patient.telephonePersonneContact ?: '-' }}</div></div>
+            <div class="col-12 col-md-6"><div><strong>Médecin traitant :</strong> {{ patient.medecinTraitant ?: '-' }}</div></div>
         </div>
     </div>
 
