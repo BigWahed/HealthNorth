@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Etablissement;
 use App\Entity\Prescription;
+use App\Entity\PriseMedicament;
 use App\Entity\RendezVous;
 use App\Entity\ResultatAnalyse;
 use App\Entity\TypeIntervention;
@@ -49,6 +50,32 @@ class ApiController extends AbstractController
         }, $types);
 
         return new JsonResponse($data);
+    }
+
+    #[Route('/api/patient/options', name: 'api_patient_options', methods: ['GET'])]
+    public function patientOptions(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $etablissements = $entityManager->getRepository(Etablissement::class)->findBy([], ['nom' => 'ASC']);
+        $types = $entityManager->getRepository(TypeIntervention::class)->findBy([], ['libelle' => 'ASC']);
+
+        $etablissementsData = array_map(static function (Etablissement $etablissement): array {
+            return [
+                'id' => $etablissement->getId(),
+                'nom' => $etablissement->getNom(),
+            ];
+        }, $etablissements);
+
+        $typesData = array_map(static function (TypeIntervention $type): array {
+            return [
+                'id' => $type->getId(),
+                'libelle' => $type->getLibelle(),
+            ];
+        }, $types);
+
+        return new JsonResponse([
+            'etablissements' => $etablissementsData,
+            'typesIntervention' => $typesData,
+        ]);
     }
 
     #[IsGranted('ROLE_PATIENT')]
@@ -139,6 +166,33 @@ class ApiController extends AbstractController
                 'professionnel' => $professionnel ? trim(($professionnel->getPrenom() ?? '').' '.($professionnel->getNom() ?? '')) : null,
             ];
         }, $prescriptions);
+
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/patient/alarmes-medicaments', name: 'api_patient_alarmes_medicaments', methods: ['GET'])]
+    public function patientAlarmesMedicaments(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $patient = $this->getUser();
+
+        if (!$patient instanceof User) {
+            return new JsonResponse(['message' => 'Utilisateur non reconnu.'], 403);
+        }
+
+        $prisesMedicaments = $entityManager->getRepository(PriseMedicament::class)->findBy(
+            ['patient' => $patient],
+            ['id' => 'DESC']
+        );
+
+        $data = array_map(static function (PriseMedicament $prise): array {
+            return [
+                'id' => $prise->getId(),
+                'medicament' => $prise->getMedicament()?->getNom(),
+                'posologie' => $prise->getPosologie(),
+                'frequence' => $prise->getFrequence(),
+                'momentPrise' => $prise->getMomentPrise(),
+            ];
+        }, $prisesMedicaments);
 
         return new JsonResponse($data);
     }
