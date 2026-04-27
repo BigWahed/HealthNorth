@@ -94,21 +94,43 @@ php -S 127.0.0.1:8000 -t public
 ## 12) Routes API principales
 - `GET /api/etablissements`
 - `GET /api/types-intervention`
+- `GET /api/patient/dossier`
 - `GET /api/patient/rendez-vous`
 - `GET /api/patient/prescriptions`
 - `GET /api/patient/resultats`
 
-## 13) Explication simple de l'architecture MVC
+## 13) Evolution du dossier patient (web + mobile)
+L'entité `User` a été enrichie pour compléter le dossier patient avec :
+- `photo`
+- `numeroSecuriteSociale`
+- `personneContact`
+- `telephonePersonneContact`
+- `medecinTraitant`
+
+Important :
+- ces champs servent au dossier patient (application web Symfony + future application mobile Flutter),
+- la connexion reste basée sur `email + mot de passe`,
+- le numéro de sécurité sociale n'est pas utilisé pour l'authentification.
+
+## 14) Explication simple de l'architecture MVC
 - **Model** : les entités Doctrine (`src/Entity`) + base de données.  
 - **View** : les pages Twig (`templates`).  
 - **Controller** : la logique applicative (`src/Controller`) qui relie les données et les vues.
 
 En résumé : le contrôleur reçoit la requête, récupère les données (Model), puis affiche une vue Twig (View).
 
-## 14) Rôle de l'API (explication simple)
+## 15) Rôle de l'API (explication simple)
 L'API permet d'exposer certaines données en JSON (sans page HTML).  
 Elle sert surtout à :
 - connecter plus tard une application mobile,
 - permettre à d'autres clients (Postman, front JS, mobile) d'utiliser les données,
 - séparer la partie interface web et la partie échange de données.
+
+## 16) Note importante sur la base de données
+La base de données est commune entre :
+- l'application web Symfony (version actuelle),
+- la future application mobile Flutter.
+
+Cela signifie que les deux applications liront et écriront dans la même base.
+Les évolutions de schéma (migrations) doivent donc rester compatibles avec les deux côtés.
 

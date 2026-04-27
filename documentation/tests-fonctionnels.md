@@ -17,7 +17,7 @@ Statut proposé :
 | 6 | Accès interdit selon le rôle | Utilisateur connecté avec un rôle donné | 1. Connecté en patient, essayer `/admin/dashboard` et `/pro/dashboard` 2. Connecté en pro, essayer `/admin/dashboard` et `/patient/dashboard` | Refus d'accès (403 ou redirection sécurité), pas d'accès aux zones non autorisées | À tester |
 | 7 | Prise de rendez-vous patient | Patient connecté, établissements + types + pro existants | 1. Aller sur `/patient/rendez-vous/nouveau` 2. Remplir formulaire 3. Valider | Rendez-vous créé, patient associé automatiquement, statut `En attente`, message flash succès | À tester |
 | 8 | Consultation des rendez-vous patient | Patient connecté, rendez-vous existants | 1. Aller sur `/patient/rendez-vous` | Liste des rendez-vous du patient connecté uniquement | À tester |
-| 9 | Consultation du dossier patient | Patient connecté | 1. Aller sur `/patient/dossier` | Le dossier affiche infos perso + résumés (rdv, prescriptions, résultats, prises) du patient connecté uniquement | À tester |
+| 9 | Consultation du dossier patient (version enrichie) | Patient connecté | 1. Aller sur `/patient/dossier` | Le dossier affiche les infos perso classiques + `photo`, `numeroSecuriteSociale`, `personneContact`, `telephonePersonneContact`, `medecinTraitant`, ainsi que les résumés (rdv, prescriptions, résultats, prises) du patient connecté uniquement | À tester |
 | 10 | Consultation des prescriptions patient | Patient connecté, prescriptions existantes | 1. Aller sur `/patient/prescriptions` | Tableau des prescriptions du patient connecté uniquement | À tester |
 | 11 | Consultation des résultats d'analyse patient | Patient connecté, résultats existants | 1. Aller sur `/patient/resultats` | Tableau des résultats du patient connecté uniquement | À tester |
 | 12 | Consultation des prises de médicaments patient | Patient connecté, prises existantes | 1. Aller sur `/patient/prises-medicaments` | Tableau des prises du patient connecté uniquement | À tester |
@@ -30,10 +30,12 @@ Statut proposé :
 | 19 | Consultation des utilisateurs côté administrateur | Admin connecté | 1. Aller sur `/admin/utilisateurs` | Liste des utilisateurs affichée (nom, prénom, email, rôles, téléphone) | À tester |
 | 20 | API `/api/etablissements` | Application lancée, établissements existants | 1. Appeler `GET /api/etablissements` (navigateur, Postman ou curl) | Réponse JSON avec la liste des établissements (id, nom, type, adresse, ville, codePostal) | À tester |
 | 21 | API `/api/patient/resultats` | Patient connecté avec résultats existants | 1. Se connecter en patient 2. Appeler `GET /api/patient/resultats` | Réponse JSON avec uniquement les résultats du patient connecté | À tester |
+| 22 | API `/api/patient/dossier` | Patient connecté | 1. Se connecter en patient 2. Appeler `GET /api/patient/dossier` | Réponse JSON avec : `id`, `nom`, `prenom`, `email`, `telephone`, `adresse`, `dateNaissance`, `photo`, `numeroSecuriteSociale`, `personneContact`, `telephonePersonneContact`, `medecinTraitant` | À tester |
 
 ## Notes de validation
 
 - Lancer les tests dans un ordre logique : authentification, espaces métier, puis API.
 - En cas d'échec, noter le message d'erreur exact et la route concernée.
 - Mettre à jour la colonne `Statut` après chaque vérification.
+- Vérifier que les données du dossier patient sont cohérentes entre la page web et l'API, car elles seront partagées avec la future application Flutter.
 
