@@ -17,6 +17,128 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ApiController extends AbstractController
 {
+    #[Route('/api/mobile/patient/{id}/dossier', name: 'api_mobile_patient_dossier', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function mobilePatientDossier(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        // Version simplifiee pour le projet scolaire (BTS) :
+        // l'application mobile passe l'id du patient dans l'URL.
+        // En production, on utiliserait un token securise (JWT ou equivalent).
+        $patient = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$patient instanceof User) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Patient introuvable',
+            ], 404);
+        }
+
+        return new JsonResponse([
+            'id' => $patient->getId(),
+            'nom' => $patient->getNom(),
+            'prenom' => $patient->getPrenom(),
+            'email' => $patient->getEmail(),
+            'telephone' => $patient->getTelephone(),
+            'adresse' => $patient->getAdresse(),
+            'dateNaissance' => $patient->getDateNaissance()?->format('Y-m-d'),
+            'photo' => $patient->getPhoto(),
+            'numeroSecuriteSociale' => $patient->getNumeroSecuriteSociale(),
+            'personneContact' => $patient->getPersonneContact(),
+            'telephonePersonneContact' => $patient->getTelephonePersonneContact(),
+            'medecinTraitant' => $patient->getMedecinTraitant(),
+        ]);
+    }
+
+    #[Route('/api/mobile/patient/{id}/rendez-vous', name: 'api_mobile_patient_rendezvous', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function mobilePatientRendezVous(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $patient = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$patient instanceof User) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Patient introuvable',
+            ], 404);
+        }
+
+        $rendezVousList = $entityManager->getRepository(RendezVous::class)->findBy(
+            ['patient' => $patient],
+            ['dateHeure' => 'ASC']
+        );
+
+        $data = array_map(static function (RendezVous $rendezVous): array {
+            $professionnel = $rendezVous->getProfessionnel();
+            $etablissement = $rendezVous->getEtablissement();
+            $typeIntervention = $rendezVous->getTypeIntervention();
+
+            return [
+                'id' => $rendezVous->getId(),
+                'dateHeure' => $rendezVous->getDateHeure()?->format('Y-m-d H:i:s'),
+                'statut' => $rendezVous->getStatut(),
+                'etablissement' => $etablissement?->getNom(),
+                'typeIntervention' => $typeIntervention?->getLibelle(),
+                'professionnel' => $professionnel ? trim(($professionnel->getPrenom() ?? '').' '.($professionnel->getNom() ?? '')) : null,
+            ];
+        }, $rendezVousList);
+
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/mobile/patient/{id}/options', name: 'api_mobile_patient_options', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function mobilePatientOptions(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $patient = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$patient instanceof User) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Patient introuvable',
+            ], 404);
+        }
+
+        $types = $entityManager->getRepository(TypeIntervention::class)->findBy([], ['libelle' => 'ASC']);
+
+        $data = array_map(static function (TypeIntervention $type): array {
+            return [
+                'id' => $type->getId(),
+                'libelle' => $type->getLibelle(),
+                'description' => $type->getDescription(),
+                // Statut fixe en V1 simplifiee.
+                'statut' => 'actif',
+            ];
+        }, $types);
+
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/mobile/patient/{id}/alarmes-medicaments', name: 'api_mobile_patient_alarmes_medicaments', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function mobilePatientAlarmesMedicaments(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $patient = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$patient instanceof User) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Patient introuvable',
+            ], 404);
+        }
+
+        $prisesMedicaments = $entityManager->getRepository(PriseMedicament::class)->findBy(
+            ['patient' => $patient],
+            ['id' => 'DESC']
+        );
+
+        $data = array_map(static function (PriseMedicament $prise): array {
+            return [
+                'medicament' => $prise->getMedicament()?->getNom(),
+                'posologie' => $prise->getPosologie(),
+                'frequence' => $prise->getFrequence(),
+                'momentPrise' => $prise->getMomentPrise(),
+            ];
+        }, $prisesMedicaments);
+
+        return new JsonResponse($data);
+    }
+
     #[Route('/api/etablissements', name: 'api_etablissements', methods: ['GET'])]
     public function etablissements(EntityManagerInterface $entityManager): JsonResponse
     {
