@@ -98,3 +98,13 @@ Le projet web contient actuellement **13 routes API** :
 - 9 routes `/api/...` (dont `/api/login`)
 
 La séparation est faisable proprement, mais il faut bien distinguer les fichiers "API uniquement" des fichiers partagés pour ne pas casser le site web.
+
+## 8) Statut après nettoyage (28/04/2026)
+Après migration vers le projet API dédié `health_north_api` :
+- `src/Controller/ApiController.php` a été supprimé du projet web.
+- La méthode `apiLogin` (route `/api/login`) a été supprimée de `SecurityController`.
+- Les routes `/api` et `/api/mobile` n'existent plus dans le projet web.
+- Les routes web (`/`, `/login`, `/logout`, dashboards) sont toujours actives.
+
+L'API mobile est maintenant portée uniquement par le projet indépendant :
+- `C:\xampp\htdocs\health_north_api`
