@@ -1,68 +1,42 @@
-﻿# Nettoyage des anciennes routes API dans le projet web Health NORTH
+﻿# Architecture API finale - Health NORTH
 
 Date : 28/04/2026  
 Projet : `C:\xampp\htdocs\HealthNorth`
 
-## 1) Pourquoi ce nettoyage
-L'API a été séparée dans un projet indépendant :
-- `C:\xampp\htdocs\health_north_api`
+## 1) Choix d'architecture retenu
+L'API est maintenant integree directement dans le projet web Symfony `HealthNorth`.
 
-Le projet web n'a donc plus besoin de conserver ses anciennes routes API (`/api` et `/api/mobile`).
+Le projet `C:\\xampp\\htdocs\\health_north_api` a ete supprime definitivement le 28/04/2026.
 
-Objectif : éviter les doublons et garder un projet web propre, sans casser les pages web.
+## 2) Routes API actives dans le projet web
+- `POST /api/login`
+- `GET /api/etablissements`
+- `GET /api/types-intervention`
+- `GET /api/mobile/patient/{id}/dossier`
+- `GET /api/mobile/patient/{id}/rendez-vous`
+- `GET /api/mobile/patient/{id}/options`
+- `GET /api/mobile/patient/{id}/alarmes-medicaments`
 
-## 2) Ce qui a été supprimé
+## 3) Organisation retenue (simple BTS)
+- pages web Symfony classiques (Twig) conservees
+- API JSON dans des controleurs dedies :
+  - `src/Controller/AuthApiController.php`
+  - `src/Controller/PublicApiController.php`
+  - `src/Controller/MobilePatientApiController.php`
+- meme base de donnees : `health_north2`
 
-### Fichier supprimé
-- `src/Controller/ApiController.php`
-
-Raison : ce contrôleur était uniquement lié à l'ancienne API intégrée.
-
-### Code supprimé dans un fichier partagé
-- Méthode `apiLogin()` (route `POST /api/login`) supprimée de `src/Controller/SecurityController.php`
-
-Raison : le login API est maintenant géré dans le projet `health_north_api`.
-
-## 3) Ce qui a été conservé (important)
-Pour ne pas casser l'application web, ces éléments ont été conservés :
-- toutes les entités (`src/Entity/...`)
-- les repositories (`src/Repository/...`)
-- les templates Twig (`templates/...`)
-- les formulaires (`src/Form/...`)
-- les contrôleurs web (`AdminController`, `HomeController`, `DashboardController`, `PatientController`, `ProController`, `RegistrationController`)
-- `SecurityController` pour les routes web `/login` et `/logout`
-
-## 4) Vérifications effectuées
-
-### A. Vérification des routes API
+## 4) Verification rapide
 Commande :
 
 ```bash
 php bin/console debug:router | Select-String -Pattern "api_|/api"
 ```
 
-Résultat : aucune route API trouvée dans le projet web.
-
-### B. Vérification des routes web principales
-Commande :
-
-```bash
-php bin/console debug:router | Select-String -Pattern "app_login|app_logout|app_home|admin_dashboard|pro_dashboard|patient_dashboard"
-```
-
-Résultat : routes web présentes.
-
-### C. Vérification du conteneur Symfony
-Commande :
-
-```bash
-php bin/console lint:container
-```
-
-Résultat : OK.
+Resultat attendu : les 7 routes API ci-dessus sont presentes.
 
 ## 5) Conclusion
-Le nettoyage est terminé :
-- l'ancienne API intégrée a été retirée du projet web,
-- les fonctionnalités web sont conservées,
-- l'API est désormais centralisée dans le projet dédié `health_north_api`.
+Architecture finale:
+- application mobile Flutter -> routes `/api` du projet web `HealthNorth`
+- navigateur web -> pages Symfony classiques
+- une seule application backend a maintenir, plus simple a expliquer a l'oral BTS.
+
