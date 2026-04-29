@@ -1,26 +1,29 @@
-﻿# Documentation API - Health NORTH
+# Documentation API - Health NORTH API
 
-Date : 28/04/2026  
-Projet : `C:\xampp\htdocs\HealthNorth`
+Date : 29/04/2026
+Projet : `C:\xampp\htdocs\HealthNorthAPI`
 
 ## 1) Objectif
-Cette API permet a l'application mobile Flutter d'acceder aux donnees medicales utiles en JSON.
+Cette API Symfony separee expose des routes JSON pour l application mobile Flutter.
 
 Base URL :
-- Android Emulator : `http://10.0.2.2:8000`
-- Flutter Web : `http://127.0.0.1:8000`
+- Flutter Web : `http://127.0.0.1:8001`
+- Android Emulator : `http://10.0.2.2:8001`
 
-## 2) Format general
-- Toutes les routes renvoient du JSON.
-- Aucune page HTML n'est retournee pour ces endpoints.
+## 2) Base de donnees
+API et Web utilisent la meme base MySQL : `health_north2`.
+
+`HealthNorthAPI/.env` :
+
+```env
+DATABASE_URL="mysql://root:@127.0.0.1:3306/health_north2?serverVersion=10.4.32-MariaDB&charset=utf8mb4"
+```
 
 ## 3) Endpoints disponibles
 
-## 3.1 Authentification
 ### `POST /api/login`
-Connexion utilisateur avec email + mot de passe.
+Body JSON :
 
-Exemple body JSON :
 ```json
 {
   "email": "patient1@healthnorth.fr",
@@ -29,11 +32,12 @@ Exemple body JSON :
 ```
 
 Succes (`200`) :
+
 ```json
 {
   "success": true,
   "user": {
-    "id": 1,
+    "id": 15,
     "email": "patient1@healthnorth.fr",
     "nom": "Dupont",
     "prenom": "Alice",
@@ -43,6 +47,7 @@ Succes (`200`) :
 ```
 
 Erreur (`401`) :
+
 ```json
 {
   "success": false,
@@ -50,77 +55,46 @@ Erreur (`401`) :
 }
 ```
 
-## 3.2 Donnees publiques
 ### `GET /api/etablissements`
-Retourne la liste des etablissements.
-
-Champs : `id`, `nom`, `type`, `adresse`, `ville`, `codePostal`
+Retour : `{ "success": true, "etablissements": [...] }`
 
 ### `GET /api/types-intervention`
-Retourne la liste des types d'intervention.
+Retour : `{ "success": true, "types": [...] }`
 
-Champs : `id`, `libelle`, `description`
-
-## 3.3 Donnees mobile patient
 ### `GET /api/mobile/patient/{id}/dossier`
-Retourne le dossier du patient.
-
-Champs :
-`id`, `nom`, `prenom`, `email`, `telephone`, `adresse`, `dateNaissance`, `photo`,
-`numeroSecuriteSociale`, `personneContact`, `telephonePersonneContact`, `medecinTraitant`
-
-Si patient introuvable (`404`) :
-```json
-{
-  "success": false,
-  "message": "Patient introuvable"
-}
-```
+Retour : `{ "success": true, "patient": {...}, "prescriptions": [...], "resultatsAnalyses": [...] }`
 
 ### `GET /api/mobile/patient/{id}/rendez-vous`
-Retourne les rendez-vous du patient.
-
-Champs : `id`, `dateHeure`, `statut`, `etablissement`, `typeIntervention`, `professionnel`
+Retour : `{ "success": true, "rendezVous": [...] }`
 
 ### `GET /api/mobile/patient/{id}/options`
-Retourne des options simples pour la V1 BTS.
-
-Exemple :
-```json
-[
-  {
-    "id": 1,
-    "libelle": "Rappel avant rendez-vous",
-    "description": "Recevoir un rappel avant un rendez-vous medical",
-    "statut": "Actif"
-  },
-  {
-    "id": 2,
-    "libelle": "Contact d'urgence",
-    "description": "Personne a prevenir en cas de besoin",
-    "statut": "Actif"
-  }
-]
-```
+Retour : `{ "success": true, "options": [...] }`
 
 ### `GET /api/mobile/patient/{id}/alarmes-medicaments`
-Retourne les prises de medicaments du patient.
+Retour : `{ "success": true, "alarmes": [...] }`
 
-Champs : `medicament`, `posologie`, `frequence`, `momentPrise`
+## 4) Lancer l API
+Depuis `C:\xampp\htdocs\HealthNorthAPI` :
 
-## 4) Codes HTTP utilises
-- `200` : succes
-- `401` : identifiants incorrects
-- `404` : ressource introuvable (ex: patient)
+```bash
+php -S 127.0.0.1:8001 -t public
+```
 
-## 5) Test rapide (Postman / Insomnia)
-1. Tester `POST /api/login`
-2. Recuperer un `id` patient
-3. Tester les routes `/api/mobile/patient/{id}/...`
-4. Verifier que les reponses sont bien en JSON
+## 5) Verifications
+Depuis `C:\xampp\htdocs\HealthNorthAPI` :
 
-## 6) Architecture finale (BTS)
-- Backend unique : `HealthNorth`
-- API integree dans `HealthNorth` (routes `/api`)
-- Mobile Flutter consomme cette API
-- Base de donnees partagee : `health_north2`
+```bash
+php bin/console debug:router
+php bin/console lint:container
+```
+
+Tests HTTP minimaux :
+- `GET http://127.0.0.1:8001/api/etablissements`
+- `GET http://127.0.0.1:8001/api/types-intervention`
+- `POST http://127.0.0.1:8001/api/login`
+
+## 6) Architecture finale
+- Web Symfony : `HealthNorth` (`8000`)
+- API Symfony : `HealthNorthAPI` (`8001`)
+- Mobile Flutter : `HealhNorthMobile`
+- Base commune : `health_north2`

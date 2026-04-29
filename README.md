@@ -1,57 +1,47 @@
-# Health NORTH - Setup de base (Symfony + Doctrine)
+# Health NORTH - Projet Web Symfony
 
-## 1) Verification rapide
+## 1) Objectif du projet web
+`HealthNorth` est le projet web Symfony (Twig) pour les utilisateurs navigateur.
 
-Lancer:
+Fonctions principales :
+- inscription et connexion web
+- espaces patient / professionnel / administrateur
+- rendez-vous et dossier patient
+- gestion admin (etablissements, types d intervention, medicaments)
 
-```bash
-php bin/console about
-php bin/console list doctrine
-```
+## 2) Architecture actuelle (separee)
+Le backend est separe en 2 projets Symfony :
+- Web : `C:\xampp\htdocs\HealthNorth` -> `http://127.0.0.1:8000`
+- API : `C:\xampp\htdocs\HealthNorthAPI` -> `http://127.0.0.1:8001`
 
-Si ces 2 commandes fonctionnent, Symfony et Doctrine sont bien installes.
+Les 2 projets utilisent la meme base : `health_north2`.
 
-## 2) Configuration de la base de donnees
-
-Le point principal est la variable `DATABASE_URL` dans le fichier `.env`.
-
-Valeur configuree:
+## 3) Base de donnees
+Configuration attendue (`.env`) :
 
 ```env
-DATABASE_URL="mysql://root:@127.0.0.1:3306/health_north?serverVersion=10.4.32-MariaDB&charset=utf8mb4"
+DATABASE_URL="mysql://root:@127.0.0.1:3306/health_north2?serverVersion=10.4.32-MariaDB&charset=utf8mb4"
 ```
 
-Explication:
-
-- `root` = utilisateur MySQL local (XAMPP classique)
-- mot de passe vide apres `root:` (a adapter si besoin)
-- `health_north` = nom de la base
-- `serverVersion` = version MariaDB (a adapter a ta machine si necessaire)
-
-## 3) Commandes Doctrine a utiliser ensuite
-
-Creer la base:
+## 4) Lancer le projet web
+Depuis `C:\xampp\htdocs\HealthNorth` :
 
 ```bash
-php bin/console doctrine:database:create
+php -S 127.0.0.1:8000 -t public
 ```
 
-Creer une migration (apres creation/modification des entites):
+## 5) Verification rapide
+Depuis `C:\xampp\htdocs\HealthNorth` :
 
 ```bash
-php bin/console doctrine:migrations:diff
+php bin/console debug:router
+php bin/console lint:container
 ```
 
-Executer la migration:
+Attendu :
+- routes web presentes (`/`, `/login`, `/register`, dashboards)
+- pas de routes `/api/*` dans le projet web
 
-```bash
-php bin/console doctrine:migrations:migrate
-```
-
-## 4) Important pour la suite
-
-Pour cette etape, on ne cree pas encore:
-
-- pages
-- authentification
-- API
+## 6) Note importante
+L application mobile Flutter ne doit pas appeler `HealthNorth` sur `8000` pour l API.
+Elle doit appeler `HealthNorthAPI` sur `8001`.
