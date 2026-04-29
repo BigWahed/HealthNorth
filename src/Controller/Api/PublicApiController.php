@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Etablissement;
 use App\Entity\TypeIntervention;
@@ -52,3 +52,4 @@ class PublicApiController extends AbstractController
         ]);
     }
 }
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Prescription;
 use App\Entity\PriseMedicament;
@@ -176,3 +176,4 @@ class MobilePatientApiController extends AbstractController
         ], 404);
     }
 }
+
